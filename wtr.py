@@ -7,7 +7,6 @@ import tkinter as tk
 import traceback
 from datetime import datetime, timedelta
 from tkinter import filedialog
-from tkinter import messagebox as mb
 from tkinter import simpledialog
 from typing import Optional
 
@@ -47,11 +46,9 @@ class FileChangeHandler(FileSystemEventHandler):
     def execute_command(self):
         print("Executing:", self.command)
         try:
-            ret = subprocess.run(self.command, shell=True, check=True).returncode
-            if ret != 0:
-                raise Exception(f"Return code is non zero for : {self.command}")
+            subprocess.run(self.command, shell=True, check=True)
         except Exception as _:  # noqa
-            mb.showerror(title=PROGRAM_TITLE, message=traceback.format_exc())
+            print(traceback.format_exc())
 
 
 def expand_path(path: str, file_path: str = None) -> str:
@@ -105,7 +102,7 @@ def select_file_and_command():
     root = tk.Tk()
     root.withdraw()
     file_path = filedialog.askopenfilename(title="Select File to Watch")
-    command = simpledialog.askstring("Command", "Enter Command to Execute", initialvalue="notepad @FILE")
+    command = simpledialog.askstring("Command", "Enter Command to Execute", initialvalue="py @FILE")
     return file_path, command
 
 
