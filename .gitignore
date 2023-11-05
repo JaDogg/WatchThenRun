@@ -1,0 +1,7 @@
+wtr.spec
+.venv
+*.pyc
+*.exe
+dist
+build
+.idea
